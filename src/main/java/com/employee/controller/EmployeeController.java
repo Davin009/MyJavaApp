@@ -38,8 +38,13 @@ public class EmployeeController {
 
 
     @PutMapping("/employee")
-    public ResponseEntity<EmployeeRepository> updateEmployee(@RequestBody EmployeeRepository employeeRepository) throws Exception {
-            EmployeeRepository updatedEmployee = employeeServices.updateEmployee(employeeRepository);
-            return new ResponseEntity<>(updatedEmployee, new HttpHeaders(), HttpStatus.OK);
+    public ResponseEntity<EmployeeRepository> updateEmployee(@RequestBody EmployeeRepository employeeRepository) throws DataNotFoundException {
+try {
+    EmployeeRepository updatedEmployee = employeeServices.updateEmployee(employeeRepository);
+    return new ResponseEntity<>(updatedEmployee, new HttpHeaders(), HttpStatus.OK);
+}catch(DataNotFoundException e){
+    throw new DataNotFoundException("Could not update due to some issue : " + e.getMessage());
+}
     }
 }
+
