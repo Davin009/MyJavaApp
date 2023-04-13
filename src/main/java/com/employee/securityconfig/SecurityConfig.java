@@ -40,10 +40,10 @@ public class SecurityConfig {
     public SecurityFilterChain filterChain(HttpSecurity httpSecurity) throws Exception {
         httpSecurity.csrf().disable()
                 .authorizeHttpRequests()
-                            .regexMatchers("/employer/all_employees")
+                            .antMatchers("/employer/{id}", "/employer/all_employees")
                             .hasRole("EMPLOYER")
                             .regexMatchers("/employee/employee")
-                            .hasAnyRole("EMPLOYER","EMPLOYEE")
+                            .hasAnyRole("/EMPLOYER","/EMPLOYEE")
                 .regexMatchers("/employer/all_employees")
                 .permitAll()
                 .anyRequest()
