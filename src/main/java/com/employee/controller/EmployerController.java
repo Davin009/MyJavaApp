@@ -35,7 +35,7 @@ public class EmployerController {
             return new ResponseEntity<EmployeeRepository>(entity, new HttpHeaders(), HttpStatus.OK);
         }
         catch (DataNotFoundException e) {
-            throw new DataNotFoundException("User data Not found in our Record!!");
+            throw new DataNotFoundException("we unable to GET data" +e.getMessage());
         }
     }
     @PostMapping("/employee")
@@ -46,7 +46,7 @@ public class EmployerController {
             return new ResponseEntity<EmployeeRepository>(updated, new HttpHeaders(), HttpStatus.OK);
         }
          catch (DataNotFoundException e) {
-            throw new DataNotFoundException("User data Not found in our Record!!");
+            throw new DataNotFoundException("we unable to create"+e.getMessage());
         }
 
     }
@@ -57,11 +57,11 @@ public class EmployerController {
             return new ResponseEntity<>(updatedEmployee, new HttpHeaders(), HttpStatus.OK);
         }
         catch(DataNotFoundException e) {
-            throw new DataNotFoundException("User data Not found in our Record!!");
+            throw new DataNotFoundException("User data Not Updated"+e.getMessage());
         }
     }
 
-    @PreAuthorize("HasRole('EMPLOYER')")
+
     @DeleteMapping("/{id}")
     public String deleteEmployeeByEmpId(@PathVariable("id") Long empId) throws DataNotFoundException {
         try {
@@ -69,7 +69,7 @@ public class EmployerController {
             return "Deleted Record";
         }
         catch (DataNotFoundException e){
-            throw new DataNotFoundException("User data Not found in our Record!!");
+            throw new DataNotFoundException("Data Not Deleted "+e.getMessage());
         }
     }
 }
